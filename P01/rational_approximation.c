@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 #ifndef DEBUG
-#  define DEBUG 0  // use a positive value to see partial results
+#  define DEBUG -1  // use a positive value to see partial results
 #endif
 
 typedef unsigned int uint;
@@ -25,6 +25,8 @@ typedef struct
   uint den;
 }
 fraction;
+uint count=0;
+uint count1=0;
 
 //
 // brute force approach
@@ -47,12 +49,17 @@ fraction best_rational_approximation_slow(double x,uint max_den)
       best.num = (uint)num;
       best.den = (uint)den;
       best_e = e;
-#if DEBUG > 0
-      printf("  %u/%u (%.15f)\n",best.num,best.den,best_e);
+#if DEBUG < 0
+      count=count+1;
+      //printf("  %u/%u (%.15f)\n",best.num,best.den,best_e);
+     
 #endif
     }
+     
   }
+  printf("%2d testes,slow method\n",count);
   return best;
+
 }
 
 //
@@ -81,8 +88,9 @@ fraction best_rational_approximation_fast(double x,uint max_den)
     {
       best = f1;
       best_e = e;
-#if DEBUG > 0
-      printf("  %u/%u (%.15f)\n",best.num,best.den,best_e);
+#if DEBUG < 0
+      count1=count1+1;
+      //printf("  %u/%u (%.15f)\n",best.num,best.den,best_e);
 #endif
     }
     if(a <= x)
@@ -90,6 +98,7 @@ fraction best_rational_approximation_fast(double x,uint max_den)
     else
       f2 = f1;
   }
+  printf("%2d testes,fast method\n",count);
 }
 
 
@@ -103,7 +112,7 @@ int main(void)
   fraction f;
   double x;
 
-  x = M_PI;
+  x = sqrt(2);
   printf("Best rational approximations to %18.16f\n",x);
   //
   // to avoid arithmetic overflows the loop
@@ -115,7 +124,7 @@ int main(void)
   //    100000000 * 10 = 1000000000
   //   1000000000 * 10 = 1410065408 (and not 10000000000)
   //
-  max_den = 10u;
+  max_den = 100000000u;
   while(1)
   {
     printf("  maximum denominator: %u\n",max_den);

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int factor(int n,int *prime_factors,int *multiplicity)
+int factor(long n,int *prime_factors,int *multiplicity)
 {
   int d,n_factors;
 
@@ -30,7 +30,7 @@ int factor(int n,int *prime_factors,int *multiplicity)
   //
   // the following code has a bug (possible arithmetic overflow); correct it!
   //
-  for(d = 2;d <= 46340 && d * d <= n;d = (d + 1) | 1)
+  for(d = 2;d <= 46340 && d * d <= n;d = (d + 1) | 1)//da 1 quando forem os dois diferentes
     if(n % d == 0)
     {
       prime_factors[n_factors] = d; // d is a prime factor
@@ -54,19 +54,34 @@ printf("d=%d\n",d);
 
 int main(int argc,char **argv)
 {
-  int i,j,n,nf,f[16],m[16]; // the product of the first 16 primes is larger than 2^64
+  
+  int i,j,nf,f[30],m[30]; // the product of the first 16 primes is larger than 2^64
+  
+  long n;
 
   for(i = 1;i < argc;i++)
-    if((n = atoi(argv[i])) > 1)
+ 
+   
+    if((n = atol(argv[i])) > 1) //mudei para atol para poder converter para long, falta haver mais espaço para armazenar mais numeros primos
     {
+      
       nf = factor(n,f,m);
-      printf("%d = ",n);
+      
+      
+        printf("%li = ",n);
       for(j = 0;j < nf;j++)
         if(m[j] == 1)
           printf("%s%d",(j == 0) ? "" : "*",f[j]);
         else
           printf("%s%d^%d",(j == 0) ? "" : "*",f[j],m[j]);
       printf(" (%s)\n",(nf == 1 && m[0] == 1) ? "prime" : "composite");
-    }
+
+
+
+      
+      
+    }  
+    
+    
   return 0;
 }
