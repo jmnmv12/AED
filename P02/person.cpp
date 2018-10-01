@@ -23,7 +23,7 @@ class person
     ~person(void);                                          // destructor
     void set_name(const char *name);
     void set_phone(const char *name);
-    void set_address(const char *address);
+    void set_address(const std::string phone);
     const char *get_name(void);
     const char *get_address(void);
     const char *get_phone(void);
