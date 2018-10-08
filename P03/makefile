@@ -19,7 +19,7 @@ run_all:		all
 
 
 functions:		functions.c
-	cc -Wall -O2 functions.c -o $@
+	cc -Wall -O0 functions.c -o $@
 
 functions_extra:	functions_extra.c
 	cc -Wall -O2 functions_extra.c -o $@
